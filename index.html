@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Paramount Mobile Detail</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+<style>
+body{margin:0;font-family:Inter,system-ui;background:#0b0b0b;color:#fff}
+a{text-decoration:none;color:inherit}
+.container{max-width:1100px;margin:auto;padding:48px 20px}
+.btn{background:#fff;color:#000;padding:14px 22px;border-radius:14px;font-weight:700;display:inline-block}
+.btn.alt{background:#111;color:#fff;border:1px solid #333}
+header{position:sticky;top:0;background:#000000dd;border-bottom:1px solid #222;z-index:50}
+.nav{display:flex;justify-content:space-between;align-items:center;padding:14px 20px}
+.hero{background:url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1600&q=80') center/cover}
+.overlay{background:linear-gradient(to bottom,#000000cc,#000000ee)}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+.card{background:#111;border:1px solid #222;border-radius:20px;padding:24px}
+.price{font-size:36px;font-weight:800}
+input,select,textarea{width:100%;padding:14px;border-radius:12px;border:1px solid #333;background:#111;color:#fff;margin-bottom:12px}
+footer{border-top:1px solid #222;background:#050505}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="nav">
+    <b>Paramount Mobile Detail</b>
+    <a class="btn" href="#book">Book Now</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="overlay">
+    <div class="container">
+      <h1>Premium Mobile Detailing<br><span style="color:#aaa">We Come To You</span></h1>
+      <p>Serving Tempe • Scottsdale • Phoenix • Mesa</p>
+      <a class="btn" href="#pricing">View Packages</a>
+      <a class="btn alt" href="tel:4804796100">Call/Text</a>
+    </div>
+  </div>
+</section>
+
+<section id="pricing" class="container">
+  <h2>Detail Packages</h2>
+  <div class="cards">
+
+    <div class="card">
+      <h3>Basic</h3>
+      <div class="price">$59+</div>
+      <ul>
+        <li>Foam Wash & Wax</li>
+        <li>Wheels & Tire Shine</li>
+        <li>Interior Vacuum</li>
+        <li>Dash & Door Panels</li>
+      </ul>
+      <a class="btn" href="#book">Book Basic</a>
+    </div>
+
+    <div class="card">
+      <h3>Standard (Most Popular)</h3>
+      <div class="price">$129+</div>
+      <ul>
+        <li>Hand Wash & Wax</li>
+        <li>Wheels & Tire Shine</li>
+        <li>Interior Vacuum</li>
+        <li>Interior Wipe & Dust</li>
+        <li>Shampoo Floor Mats</li>
+      </ul>
+      <a class="btn" href="#book">Book Standard</a>
+    </div>
+
+    <div class="card">
+      <h3>Full Detail</h3>
+      <div class="price">$199+</div>
+      <ul>
+        <li>Full Interior Shampoo</li>
+        <li>Steam Cleaning</li>
+        <li>Clay Bar Exterior</li>
+      </ul>
+      <a class="btn" href="#book">Book Full Detail</a>
+    </div>
+
+  </div>
+</section>
+
+<section id="book" class="container">
+  <h2>Request a Booking</h2>
+  <form action="https://formspree.io/f/xayrpljq" method="POST">
+    <input name="name" placeholder="Name" required>
+    <input name="phone" placeholder="Phone" required>
+    <input name="address" placeholder="Service Address" required>
+    <select name="package">
+      <option>Basic</option>
+      <option>Standard</option>
+      <option>Full Detail</option>
+    </select>
+    <input name="time" placeholder="Preferred Date & Time" required>
+    <textarea name="notes" placeholder="Extra info (pet hair, stains, SUV, etc)"></textarea>
+    <button class="btn" type="submit">Send Request</button>
+  </form>
+</section>
+
+<footer>
+  <div class="container">
+    <b>Paramount Mobile Detail</b><br>
+    📞 (480) 479-6100<br>
+    ✉️ paramountmobiledetail@gmail.com
+  </div>
+</footer>
+
+</body>
+</html>
