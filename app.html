@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Paramount Mobile Detail</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg:#070707;
+    --card:#101010;
+    --card2:#0c0c0c;
+    --line:#222;
+    --text:#fff;
+    --muted:rgba(255,255,255,.7);
+    --muted2:rgba(255,255,255,.55);
+    --accent:#ffffff;
+    --shadow: 0 20px 60px rgba(0,0,0,.55);
+    --radius:22px;
+  }
+
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial;
+    background: radial-gradient(1200px 600px at 50% 0%, rgba(255,255,255,.08), transparent 60%),
+                radial-gradient(900px 500px at 10% 15%, rgba(255,255,255,.06), transparent 60%),
+                var(--bg);
+    color:var(--text);
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+  }
+
+  a{color:inherit;text-decoration:none}
+  .container{max-width:1120px;margin:auto;padding:72px 20px}
+  .section-title{font-size:34px;letter-spacing:-.03em;margin:0}
+  .section-sub{margin:10px 0 0;color:var(--muted);max-width:720px;line-height:1.55}
+  .pill{
+    display:inline-flex;gap:10px;align-items:center;
+    border:1px solid var(--line);
+    background:rgba(255,255,255,.04);
+    color:rgba(255,255,255,.75);
+    padding:10px 14px;border-radius:999px;font-size:12px
+  }
+
+  /* Header */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(7,7,7,.7);
+    backdrop-filter: blur(12px);
+    border-bottom:1px solid rgba(255,255,255,.08);
+  }
+  .nav{
+    max-width:1120px;margin:auto;padding:14px 20px;
+    display:flex;align-items:center;justify-content:space-between;gap:16px
+  }
+  .brand{
+    display:flex;align-items:center;gap:10px;
+    font-weight:800;letter-spacing:-.02em
+  }
+  .logo{
+    width:38px;height:38px;border-radius:14px;
+    border:1px solid rgba(255,255,255,.12);
+    background:linear-gradient(135deg, rgba(255,255,255,.14), rgba(255,255,255,.04));
+    box-shadow: 0 10px 30px rgba(0,0,0,.35);
+  }
+
+  .navlinks{display:flex;gap:16px;align-items:center}
+  .navlinks a{
+    font-size:13px;color:rgba(255,255,255,.72);
+    padding:10px 10px;border-radius:14px;
+    transition:all .2s ease;
+  }
+  .navlinks a:hover{color:#fff;background:rgba(255,255,255,.06)}
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:10px;
+    background:var(--accent);color:#000;
+    padding:12px 18px;border-radius:16px;
+    font-weight:800;font-size:13px;
+    border:1px solid rgba(255,255,255,.15);
+    transition:transform .18s ease, opacity .18s ease;
+    cursor:pointer;
+  }
+  .btn:hover{transform:translateY(-1px);opacity:.95}
+  .btn.alt{
+    background:rgba(255,255,255,.06);
+    color:#fff;border:1px solid rgba(255,255,255,.12);
+  }
+
+  /* Hero */
+  .hero{
+    padding:0;
+    border-bottom:1px solid rgba(255,255,255,.08);
+  }
+  .hero-wrap{
+    min-height:72vh;
+    background:
+      radial-gradient(700px 400px at 70% 25%, rgba(255,255,255,.14), transparent 60%),
+      linear-gradient(to bottom, rgba(0,0,0,.55), rgba(0,0,0,.88)),
+      url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1800&q=80') center/cover;
+  }
+  .hero-inner{max-width:1120px;margin:auto;padding:86px 20px 64px}
+  h1{
+    margin:0;
+    font-size: clamp(38px, 5vw, 64px);
+    letter-spacing:-.05em;
+    line-height:1.03;
+  }
+  .hero-inner p{
+    margin:18px 0 0;
+    max-width:720px;
+    color:rgba(255,255,255,.72);
+    font-size:16px;
+    line-height:1.6;
+  }
+  .hero-cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+  .stats{
+    display:grid;grid-template-columns:repeat(3, minmax(0,1fr));
+    gap:12px;margin-top:36px;
+  }
+  .stat{
+    border:1px solid rgba(255,255,255,.10);
+    background:rgba(255,255,255,.06);
+    border-radius:20px;padding:14px 14px;
+    transition:transform .2s ease, background .2s ease;
+  }
+  .stat:hover{transform:translateY(-2px);background:rgba(255,255,255,.08)}
+  .stat .t{font-weight:800;font-size:13px}
+  .stat .d{margin-top:6px;color:rgba(255,255,255,.66);font-size:12px;line-height:1.4}
+
+  /* Cards / grids */
+  .grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:26px}
+  .card{
+    background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.035));
+    border:1px solid rgba(255,255,255,.10);
+    border-radius:var(--radius);
+    padding:22px;
+    box-shadow: 0 0 0 rgba(0,0,0,0);
+    transition:transform .2s ease, box-shadow .2s ease, background .2s ease;
+  }
+  .card:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+  .card h3{margin:0;font-size:18px;letter-spacing:-.02em}
+  .badge{
+    display:inline-flex;align-items:center;
+    margin-top:10px;
+    font-size:12px;color:rgba(255,255,255,.72);
+    border:1px solid rgba(255,255,255,.12);
+    background:rgba(0,0,0,.25);
+    padding:7px 10px;border-radius:999px;
+  }
+  .price{font-size:42px;font-weight:800;letter-spacing:-.03em;margin-top:16px}
+  .muted{color:var(--muted2);font-size:12px;margin-top:4px}
+  ul{margin:14px 0 0;padding-left:18px;color:rgba(255,255,255,.72);line-height:1.55}
+  li{margin:6px 0}
+  .card .btn{margin-top:18px;width:100%}
+
+  .popular{
+    position:relative;
+    border-color:rgba(255,255,255,.22);
+    background:linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.04));
+  }
+  .popular::before{
+    content:"Most Popular";
+    position:absolute;top:-12px;left:18px;
+    background:#fff;color:#000;
+    padding:6px 10px;border-radius:999px;
+    font-size:12px;font-weight:800;
+    border:1px solid rgba(255,255,255,.2);
+  }
+
+  /* Gallery */
+  .gallery{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:14px;margin-top:26px}
+  .g{
+    position:relative;overflow:hidden;border-radius:26px;
+    border:1px solid rgba(255,255,255,.10);
+    min-height:240px;
+    background:#0b0b0b;
+  }
+  .g .img{position:absolute;inset:0;background-size:cover;background-position:center;filter:saturate(1.05) contrast(1.02)}
+  .g .shade{position:absolute;inset:0;background:linear-gradient(to top, rgba(0,0,0,.72), rgba(0,0,0,.25))}
+  .g .txt{position:absolute;left:18px;bottom:16px;right:18px}
+  .g .txt .h{font-weight:800}
+  .g .txt .s{margin-top:6px;color:rgba(255,255,255,.7);font-size:12px;line-height:1.35}
+  .g:hover .img{transform:scale(1.03)}
+  .g .img{transition:transform .35s ease}
+
+  /* Booking */
+  form{
+    margin-top:22px;
+    display:grid;gap:12px;
+    padding:18px;
+    border-radius:26px;
+    border:1px solid rgba(255,255,255,.10);
+    background:rgba(255,255,255,.05);
+  }
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  input,select,textarea{
+    width:100%;padding:14px 14px;border-radius:16px;
+    border:1px solid rgba(255,255,255,.14);
+    background:rgba(0,0,0,.35);
+    color:#fff;
+    outline:none;
+    transition:border .2s ease, background .2s ease;
+  }
+  input:focus,select:focus,textarea:focus{border-color:rgba(255,255,255,.30);background:rgba(0,0,0,.45)}
+  textarea{min-height:110px;resize:vertical}
+  .note{color:rgba(255,255,255,.55);font-size:12px;line-height:1.45}
+
+  /* FAQ */
+  .faq{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:24px}
+  details{
+    border:1px solid rgba(255,255,255,.10);
+    background:rgba(255,255,255,.05);
+    border-radius:22px;
+    padding:16px 16px;
+  }
+  summary{cursor:pointer;font-weight:800}
+  details p{color:rgba(255,255,255,.7);line-height:1.55;margin:12px 0 0}
+
+  /* Footer */
+  footer{border-top:1px solid rgba(255,255,255,.10);background:rgba(0,0,0,.35)}
+  .foot{
+    max-width:1120px;margin:auto;
+    padding:36px 20px;
+    display:flex;justify-content:space-between;align-items:flex-start;gap:18px;
+    flex-wrap:wrap;
+  }
+  .foot .small{color:rgba(255,255,255,.55);font-size:12px;margin-top:10px}
+  .contact{color:rgba(255,255,255,.72);line-height:1.8}
+
+  /* Floating mobile CTA */
+  .float{
+    position:fixed;left:14px;right:14px;bottom:14px;z-index:60;
+    display:none;
+    background:rgba(0,0,0,.6);
+    backdrop-filter: blur(10px);
+    border:1px solid rgba(255,255,255,.10);
+    border-radius:20px;
+    padding:10px;
+  }
+  .float .btn{width:100%}
+
+  /* Responsive */
+  @media (max-width: 900px){
+    .navlinks{display:none}
+    .stats{grid-template-columns:1fr;max-width:520px}
+    .grid3{grid-template-columns:1fr}
+    .gallery{grid-template-columns:1fr}
+    .row2{grid-template-columns:1fr}
+    .faq{grid-template-columns:1fr}
+    .float{display:block}
+    .container{padding:56px 18px}
+    .hero-inner{padding:74px 18px 56px}
+  }
+
+  /* simple fade-in */
+  .reveal{opacity:0;transform:translateY(10px);transition:opacity .6s ease, transform .6s ease}
+  .reveal.on{opacity:1;transform:none}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="nav">
+    <div class="brand">
+      <div class="logo"></div>
+      <div>
+        <div>Paramount Mobile Detail</div>
+        <div style="font-size:12px;color:rgba(255,255,255,.6);font-weight:600">Mobile Detailing</div>
+      </div>
+    </div>
+
+    <div class="navlinks">
+      <a href="#pricing">Pricing</a>
+      <a href="#results">Results</a>
+      <a href="#book">Booking</a>
+      <a href="#faq">FAQ</a>
+    </div>
+
+    <div style="display:flex;gap:10px;align-items:center">
+      <a class="btn alt" href="tel:4804796100">Call/Text</a>
+      <a class="btn" href="#book">Book Now</a>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-wrap">
+    <div class="hero-inner">
+      <span class="pill">Serving Tempe • Scottsdale • Phoenix • Mesa</span>
+      <h1 class="reveal">Premium detailing.<br><span style="color:rgba(255,255,255,.7)">At your place. On your schedule.</span></h1>
+      <p class="reveal">Professional mobile detailing — clean, protected, and turning heads. Fast booking, transparent pricing, and a finish that looks expensive.</p>
+
+      <div class="hero-cta reveal">
+        <a class="btn" href="#book">Book in minutes</a>
+        <a class="btn alt" href="#pricing">See packages</a>
+      </div>
+
+      <div class="stats">
+        <div class="stat reveal">
+          <div class="t">Fast booking</div>
+          <div class="d">Pick a time and lock it in.</div>
+        </div>
+        <div class="stat reveal">
+          <div class="t">We come to you</div>
+          <div class="d">Home, work, apartment — easy.</div>
+        </div>
+        <div class="stat reveal">
+          <div class="t">Pro-grade finish</div>
+          <div class="d">Safe products + clean technique.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="pricing" class="container">
+  <h2 class="section-title reveal">Simple pricing</h2>
+  <p class="section-sub reveal">Pick a package that matches your car and your time. Prices start at the amount shown.</p>
+
+  <div class="grid3">
+    <div class="card reveal">
+      <h3>Basic</h3>
+      <div class="badge">Great for maintenance</div>
+      <div class="price">$59+</div>
+      <div class="muted">Starting price</div>
+      <ul>
+        <li>Foam Wash & Wax</li>
+        <li>Wheels & Tire Shine</li>
+        <li>Interior Vacuum</li>
+        <li>Wipe Down Console, Dash & Door Panels</li>
+      </ul>
+      <a class="btn" href="#book">Book Basic</a>
+    </div>
+
+    <div class="card popular reveal">
+      <h3>Standard</h3>
+      <div class="badge">Best overall value</div>
+      <div class="price">$129+</div>
+      <div class="muted">Starting price</div>
+      <ul>
+        <li>Hand Wash & Wax</li>
+        <li>Wheels & Tire Shine</li>
+        <li>Interior Vacuum</li>
+        <li>Wipe Down Console, Dash & Door Panels</li>
+        <li>Shampoo Floor Mats</li>
+        <li>Interior Wipe & Dust</li>
+      </ul>
+      <a class="btn" href="#book">Book Standard</a>
+    </div>
+
+    <div class="card reveal">
+      <h3>Full Detail</h3>
+      <div class="badge">Deep clean + decon</div>
+      <div class="price">$199+</div>
+      <div class="muted">Starting price</div>
+      <ul>
+        <li>Full Interior Shampoo (Seats, Carpet, Mats, Panels)</li>
+        <li>Steam Clean & Deep Interior Clean</li>
+        <li>Full Exterior Clay Bar Treatment</li>
+      </ul>
+      <a class="btn" href="#book">Book Full Detail</a>
+    </div>
+  </div>
+
+  <div style="margin-top:18px" class="reveal">
+    <span class="pill">Typical appointments: 1–4 hours</span>
+    <span class="pill" style="margin-left:10px">Add-ons available (pet hair, stains, etc.)</span>
+  </div>
+</section>
+
+<section id="results" class="container" style="padding-top:0">
+  <h2 class="section-title reveal">Results that pop</h2>
+  <p class="section-sub reveal">This is what people pay for — clean, glossy, and premium-looking.</p>
+
+  <div class="gallery">
+    <div class="g reveal" style="grid-column: span 7 / span 7;">
+      <div class="img" style="background-image:url('https://images.unsplash.com/photo-1525609004556-c46c7d6cf023?auto=format&fit=crop&w=1600&q=80')"></div>
+      <div class="shade"></div>
+      <div class="txt">
+        <div class="h">Gloss + protection</div>
+        <div class="s">Washed, decon’d, and finished clean.</div>
+      </div>
+    </div>
+
+    <div class="g reveal" style="grid-column: span 5 / span 5;">
+      <div class="img" style="background-image:url('https://images.unsplash.com/photo-1515923152115-758a6b16f0d4?auto=format&fit=crop&w=1400&q=80')"></div>
+      <div class="shade"></div>
+      <div class="txt">
+        <div class="h">Interior reset</div>
+        <div class="s">Vacuum, wipe-down, and deep clean.</div>
+      </div>
+    </div>
+
+    <div class="g reveal" style="grid-column: span 5 / span 5;">
+      <div class="img" style="background-image:url('https://images.unsplash.com/photo-1489824904134-891ab64532f1?auto=format&fit=crop&w=1400&q=80')"></div>
+      <div class="shade"></div>
+      <div class="txt">
+        <div class="h">Wheels & tires</div>
+        <div class="s">Cleaned and dressed for that fresh look.</div>
+      </div>
+    </div>
+
+    <div class="g reveal" style="grid-column: span 7 / span 7;">
+      <div class="img" style="background-image:url('https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&w=1600&q=80')"></div>
+      <div class="shade"></div>
+      <div class="txt">
+        <div class="h">Full Detail</div>
+        <div class="s">Shampoo + steam + clay bar treatment.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid3" style="margin-top:18px">
+    <div class="card reveal">
+      <h3>Alex</h3>
+      <div class="muted">“Booked in 2 minutes. Looked brand new.”</div>
+    </div>
+    <div class="card reveal">
+      <h3>Maya</h3>
+      <div class="muted">“On time, professional, interior was spotless.”</div>
+    </div>
+    <div class="card reveal">
+      <h3>Jordan</h3>
+      <div class="muted">“Standard package is perfect every time.”</div>
+    </div>
+  </div>
+</section>
+
+<section id="book" class="container" style="padding-top:0">
+  <h2 class="section-title reveal">Book in minutes</h2>
+  <p class="section-sub reveal">Tell us what you want + where you are. We’ll confirm fast by text.</p>
+
+  <form class="reveal" action="https://formspree.io/f/xayrpljq" method="POST">
+    <div class="row2">
+      <input name="name" placeholder="Name" required>
+      <input name="phone" placeholder="Phone (480…)" required>
+    </div>
+    <div class="row2">
+      <input name="email" placeholder="Email (optional)">
+      <select name="package">
+        <option>Basic ($59+)</option>
+        <option selected>Standard ($129+)</option>
+        <option>Full Detail ($199+)</option>
+      </select>
+    </div>
+    <input name="address" placeholder="Service Address" required>
+    <input name="time" placeholder="Preferred Date & Time (ex: Fri 2pm)" required>
+    <textarea name="notes" placeholder="Notes (pet hair, stains, SUV/truck, etc.)"></textarea>
+
+    <button class="btn" type="submit">Send Booking Request</button>
+    <div class="note">By submitting, you agree we can contact you to confirm your appointment. Prices start at listed amount.</div>
+    <div class="note">Prefer texting? <a href="tel:4804796100" style="text-decoration:underline">Call/Text (480) 479-6100</a></div>
+  </form>
+</section>
+
+<section id="faq" class="container" style="padding-top:0">
+  <h2 class="section-title reveal">FAQ</h2>
+  <p class="section-sub reveal">Quick answers so customers feel confident booking.</p>
+
+  <div class="faq">
+    <details class="reveal">
+      <summary>Do you need water or power?</summary>
+      <p>If you have access, great. If not, tell us what’s available and we’ll confirm what we can do fully mobile.</p>
+    </details>
+
+    <details class="reveal">
+      <summary>What does the “+” mean?</summary>
+      <p>Prices start at the listed amount. Large vehicles or extra-heavy cleaning may cost more — we confirm before starting.</p>
+    </details>
+
+    <details class="reveal">
+      <summary>How fast do you confirm?</summary>
+      <p>Usually by text the same day. If you need it ASAP, call/text us and we’ll lock it in.</p>
+    </details>
+
+    <details class="reveal">
+      <summary>How long does it take?</summary>
+      <p>Most jobs take 1–4 hours depending on package and vehicle condition.</p>
+    </details>
+  </div>
+</section>
+
+<footer>
+  <div class="foot">
+    <div>
+      <div style="font-weight:800">Paramount Mobile Detail</div>
+      <div class="small">© <span id="y"></span> Paramount Mobile Detail. All rights reserved.</div>
+    </div>
+
+    <div class="contact">
+      <div>📞 (480) 479-6100</div>
+      <div>✉️ paramountmobiledetail@gmail.com</div>
+      <div>📍 Tempe • Scottsdale • Phoenix • Mesa</div>
+    </div>
+
+    <div style="display:flex;gap:10px;align-items:center">
+      <a class="btn alt" href="#pricing">View Pricing</a>
+      <a class="btn" href="#book">Book Now</a>
+    </div>
+  </div>
+</footer>
+
+<!-- floating mobile CTA -->
+<div class="float">
+  <a class="btn" href="#book">Book Now — Paramount Mobile Detail</a>
+</div>
+
+<script>
+  // year
+  document.getElementById('y').textContent = new Date().getFullYear();
+
+  // reveal on scroll
+  const els = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){ e.target.classList.add('on'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12 });
+  els.forEach(el=>io.observe(el));
+</script>
+
+</body>
+</html>
