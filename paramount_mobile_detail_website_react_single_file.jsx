@@ -1,344 +1,405 @@
-import React, { useMemo, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import {
-  ArrowRight,
-  Calendar,
-  Car,
-  CheckCircle2,
-  Clock,
-  Mail,
-  MapPin,
-  Phone,
-  Shield,
-  Sparkles,
-  Star,
-} from "lucide-react";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Paramount Mobile Detail | Scottsdale Luxury Detailing</title>
 
-// ================= CONFIG =================
-const BRAND = {
-  name: "Paramount Mobile Detail",
-  tagline: "Professional mobile detailing — clean, protected, and turning heads.",
-  subtag: "We come to you. Fast booking. Transparent pricing.",
-  serviceArea: "Tempe • Scottsdale • Phoenix • Mesa",
-};
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
 
-const CONTACT = {
-  phoneDisplay: "(480) 479-6100",
-  phoneHref: "+14804796100",
-  email: "paramountmobiledetail@gmail.com",
-  hours: "Mon–Sun • 8am–6pm",
-  instagram: "https://instagram.com/yourhandle", // change when ready
-};
-
-const BOOKING = {
-  // Paste Square / Calendly / Acuity embed URL here if you have one
-  embedUrl: "",
-  submitEndpoint: "", // optional (Formspree or your API)
-};
-
-const PACKAGES = [
-  {
-    name: "Basic",
-    from: 59,
-    badge: "Great for maintenance",
-    icon: Sparkles,
-    bullets: [
-      "Foam Wash & Wax",
-      "Wheels & Tire Shine",
-      "Interior Vacuum",
-      "Wipe Down Console, Dash & Door Panels",
-    ],
-  },
-  {
-    name: "Standard",
-    from: 129,
-    badge: "Most popular",
-    highlight: true,
-    icon: Shield,
-    bullets: [
-      "Hand Wash & Wax",
-      "Wheels & Tire Shine",
-      "Interior Vacuum",
-      "Wipe Down Console, Dash & Door Panels",
-      "Shampoo Floor Mats",
-      "Interior Wipe & Dust",
-    ],
-  },
-  {
-    name: "Full Detail",
-    from: 199,
-    badge: "Deep clean + decon",
-    icon: Car,
-    bullets: [
-      "Full Interior Shampoo (Seats, Carpet, Floor Mats, Door Panels)",
-      "Steam Clean & Deep Interior Clean",
-      "Full Exterior Clay Bar Treatment",
-    ],
-  },
-];
-
-const REVIEWS = [
-  { name: "Alex", text: "Booked in 2 minutes. Looked brand new.", meta: "5‑star service" },
-  { name: "Maya", text: "Interior is spotless. Super professional.", meta: "On‑site detail" },
-  { name: "Jordan", text: "Standard package is perfect every time.", meta: "Repeat customer" },
-];
-
-const FAQ = [
-  { q: "Do you need water or power?", a: "If you have access, great — otherwise we can be fully mobile for many services." },
-  { q: "What does the + mean in prices?", a: "Prices start at the listed amount. Larger or dirtier vehicles may cost more." },
-  { q: "How do I know my booking is confirmed?", a: "If you use the calendar, it’s instant. If you request, we confirm by text." },
-];
-
-// ================= HELPERS =================
-function cn(...c) { return c.filter(Boolean).join(" "); }
-
-function formatMoney(n) {
-  return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(n);
-}
-
-function scrollToId(id) {
-  const el = document.getElementById(id);
-  if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-}
-
-// ================= MAIN =================
-export default function ParamountMobileDetailSite() {
-  const [mobileMenu, setMobileMenu] = useState(false);
-  const [toast, setToast] = useState(null);
-
-  const nav = useMemo(() => ([
-    { label: "Pricing", id: "pricing" },
-    { label: "Results", id: "results" },
-    { label: "Booking", id: "booking" },
-    { label: "FAQ", id: "faq" },
-  ]), []);
-
-  const heroStats = [
-    { icon: Clock, title: "Fast booking", desc: "Pick a time in minutes" },
-    { icon: MapPin, title: "We come to you", desc: BRAND.serviceArea },
-    { icon: Shield, title: "Pro‑grade", desc: "Safe tools & chemicals" },
-  ];
-
-  return (
-    <div className="min-h-screen bg-neutral-950 text-neutral-50">
-      <Noise />
-
-      {/* HEADER */}
-      <header className="sticky top-0 z-50 border-b border-white/10 bg-neutral-950/80 backdrop-blur">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
-          <button onClick={() => scrollToId("top")} className="flex items-center gap-2">
-            <div className="grid h-10 w-10 place-items-center rounded-2xl border border-white/10 bg-white/5"><Sparkles className="h-5 w-5" /></div>
-            <div className="text-left leading-tight">
-              <div className="text-sm font-semibold">{BRAND.name}</div>
-              <div className="text-xs text-white/60">Mobile Detailing</div>
-            </div>
-          </button>
-
-          <nav className="hidden items-center gap-6 md:flex">
-            {nav.map(n => (
-              <button key={n.id} onClick={() => scrollToId(n.id)} className="text-sm text-white/75 hover:text-white">{n.label}</button>
-            ))}
-            <button onClick={() => scrollToId("booking")} className="rounded-2xl bg-white px-4 py-2 text-sm font-semibold text-neutral-950">Book now</button>
-          </nav>
-
-          <button className="grid h-10 w-10 place-items-center rounded-2xl border border-white/10 bg-white/5 md:hidden" onClick={() => setMobileMenu(v => !v)}>
-            <div className="space-y-1"><div className="h-0.5 w-5 bg-white" /><div className="h-0.5 w-5 bg-white/80" /><div className="h-0.5 w-5 bg-white/60" /></div>
-          </button>
-        </div>
-
-        <AnimatePresence>
-          {mobileMenu && (
-            <motion.div initial={{ height: 0 }} animate={{ height: "auto" }} exit={{ height: 0 }} className="border-t border-white/10 md:hidden">
-              <div className="mx-auto max-w-6xl px-4 py-3 grid gap-2">
-                {nav.map(n => (
-                  <button key={n.id} onClick={() => { setMobileMenu(false); scrollToId(n.id); }} className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-left text-sm">{n.label}</button>
-                ))}
-                <button onClick={() => { setMobileMenu(false); scrollToId("booking"); }} className="rounded-2xl bg-white px-4 py-3 text-sm font-semibold text-neutral-950">Book now</button>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </header>
-
-      {/* HERO */}
-      <main id="top">
-        <section className="relative overflow-hidden">
-          <Glow />
-          <div className="mx-auto grid max-w-6xl gap-10 px-4 pb-16 pt-12 md:grid-cols-12 md:pb-24 md:pt-20">
-            <div className="md:col-span-7">
-              <h1 className="text-4xl font-semibold md:text-6xl">Premium detailing.<span className="block text-white/70">At your place.</span></h1>
-              <p className="mt-5 max-w-xl text-white/70">{BRAND.tagline} {BRAND.subtag}</p>
-              <div className="mt-7 flex gap-3">
-                <button onClick={() => scrollToId("booking")} className="rounded-2xl bg-white px-5 py-3 text-sm font-semibold text-neutral-950">Book now</button>
-                <a href={`tel:${CONTACT.phoneHref}`} className="rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm">Call/Text</a>
-              </div>
-              <div className="mt-8 grid gap-3 sm:grid-cols-3">
-                {heroStats.map(s => (
-                  <div key={s.title} className="rounded-3xl border border-white/10 bg-white/5 p-4">
-                    <div className="flex items-center gap-2"><s.icon className="h-4 w-4" /><div className="text-sm font-semibold">{s.title}</div></div>
-                    <div className="mt-2 text-xs text-white/65">{s.desc}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* PRICING */}
-        <section id="pricing" className="mx-auto max-w-6xl px-4 py-16">
-          <h2 className="text-3xl font-semibold md:text-4xl">Simple pricing</h2>
-          <div className="mt-8 grid gap-4 md:grid-cols-3">
-            {PACKAGES.map(p => <PriceCard key={p.name} pkg={p} onBook={() => scrollToId("booking")} />)}
-          </div>
-        </section>
-
-        {/* RESULTS */}
-        <section id="results" className="mx-auto max-w-6xl px-4 pb-16">
-          <h2 className="text-3xl font-semibold md:text-4xl">Results that pop</h2>
-          <div className="mt-8 grid gap-4 md:grid-cols-12">
-            <GalleryCard className="md:col-span-7" title="Gloss + protection" subtitle="Washed and sealed." img="https://images.unsplash.com/photo-1525609004556-c46c7d6cf023?auto=format&fit=crop&w=1600&q=80" />
-            <GalleryCard className="md:col-span-5" title="Interior reset" subtitle="Deep interior clean." img="https://images.unsplash.com/photo-1515923152115-758a6b16f0d4?auto=format&fit=crop&w=1200&q=80" />
-            <GalleryCard className="md:col-span-5" title="Wheels & tires" subtitle="Cleaned and dressed." img="https://images.unsplash.com/photo-1489824904134-891ab64532f1?auto=format&fit=crop&w=1200&q=80" />
-            <GalleryCard className="md:col-span-7" title="Full detail" subtitle="Shampoo + steam." img="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1600&q=80" />
-          </div>
-        </section>
-
-        {/* BOOKING */}
-        <section id="booking" className="mx-auto max-w-6xl px-4 pb-20">
-          <h2 className="text-3xl font-semibold md:text-4xl">Book in minutes</h2>
-          {BOOKING.embedUrl ? (
-            <iframe title="booking" src={BOOKING.embedUrl} className="mt-6 h-[600px] w-full rounded-3xl border border-white/10" />
-          ) : (
-            <BookingRequestForm onToast={t => setToast(t)} submitEndpoint={BOOKING.submitEndpoint} />
-          )}
-        </section>
-
-        {/* FAQ */}
-        <section id="faq" className="mx-auto max-w-6xl px-4 pb-24">
-          <h2 className="text-3xl font-semibold md:text-4xl">FAQ</h2>
-          <div className="mt-6 grid gap-4 md:grid-cols-2">
-            {FAQ.map(f => (
-              <details key={f.q} className="rounded-3xl border border-white/10 bg-white/5 p-5">
-                <summary className="cursor-pointer text-sm font-semibold">{f.q}</summary>
-                <p className="mt-3 text-sm text-white/70">{f.a}</p>
-              </details>
-            ))}
-          </div>
-        </section>
-
-        {/* FOOTER */}
-        <footer className="border-t border-white/10 bg-neutral-950/50">
-          <div className="mx-auto max-w-6xl px-4 py-10 grid gap-6 md:grid-cols-3">
-            <div>
-              <div className="font-semibold">{BRAND.name}</div>
-              <div className="mt-2 text-sm text-white/70">{BRAND.tagline}</div>
-            </div>
-            <div className="text-sm text-white/70">
-              <div>📞 {CONTACT.phoneDisplay}</div>
-              <div>✉️ {CONTACT.email}</div>
-              <div>📍 {BRAND.serviceArea}</div>
-            </div>
-            <button onClick={() => scrollToId("booking")} className="rounded-2xl bg-white px-4 py-2 text-sm font-semibold text-neutral-950">Book now</button>
-          </div>
-        </footer>
-      </main>
-
-      <Toast toast={toast} onClose={() => setToast(null)} />
-    </div>
-  );
-}
-
-// ================= COMPONENTS =================
-
-function PriceCard({ pkg, onBook }) {
-  const Icon = pkg.icon;
-  return (
-    <div className={cn("relative rounded-[28px] border p-6", pkg.highlight ? "border-white/20 bg-white/10" : "border-white/10 bg-white/5")}>
-      {pkg.highlight && <div className="absolute -top-3 left-6 rounded-full bg-white px-3 py-1 text-xs font-semibold text-neutral-950">Most popular</div>}
-      <div className="flex justify-between">
-        <div>
-          <div className="text-xl font-semibold">{pkg.name}</div>
-          <div className="text-xs text-white/60">{pkg.badge}</div>
-        </div>
-        <div className="grid h-11 w-11 place-items-center rounded-2xl border border-white/10 bg-white/5"><Icon className="h-5 w-5" /></div>
-      </div>
-      <div className="mt-5 text-4xl font-semibold">{formatMoney(pkg.from)}+</div>
-      <ul className="mt-5 grid gap-2 text-sm text-white/75">
-        {pkg.bullets.map(b => (
-          <li key={b} className="flex gap-3"><CheckCircle2 className="h-4 w-4" />{b}</li>
-        ))}
-      </ul>
-      <button onClick={onBook} className="mt-6 w-full rounded-2xl bg-white px-4 py-3 text-sm font-semibold text-neutral-950">Book {pkg.name}</button>
-    </div>
-  );
-}
-
-function GalleryCard({ className, title, subtitle, img }) {
-  return (
-    <div className={cn("relative overflow-hidden rounded-[28px] border border-white/10", className)}>
-      <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${img})` }} />
-      <div className="absolute inset-0 bg-neutral-950/60" />
-      <div className="relative p-6">
-        <div className="text-sm font-semibold">{title}</div>
-        <div className="text-xs text-white/70">{subtitle}</div>
-        <div className="mt-6 h-24 rounded-2xl border border-white/10 bg-white/5" />
-      </div>
-    </div>
-  );
-}
-
-function BookingRequestForm({ onToast, submitEndpoint }) {
-  const [form, setForm] = useState({ name: "", phone: "", address: "", date: "", package: "Standard" });
-  const [done, setDone] = useState(false);
-
-  const canSubmit = form.name && form.phone && form.address && form.date;
-
-  async function submit(e) {
-    e.preventDefault();
-    if (!canSubmit) return;
-    if (submitEndpoint) await fetch(submitEndpoint, { method: "POST", body: JSON.stringify(form) });
-    setDone(true);
-    onToast?.({ title: "Request sent", message: "We’ll text you to confirm." });
+<style>
+  :root{
+    --bg:#050505;
+    --card:#0f0f0f;
+    --line:#333;
+    --text:#fff;
+    --muted:rgba(255,255,255,.65);
+    --gold:#D4AF37; /* Scottsdale Gold */
+    --gold-dim:rgba(212, 175, 55, 0.15);
+    --radius:16px;
+    --shadow: 0 20px 60px rgba(0,0,0,.8);
   }
 
-  if (done) return <div className="mt-6 rounded-2xl border border-white/10 bg-white/5 p-4">Request received — we’ll confirm shortly.</div>;
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    font-family:'Inter', sans-serif;
+    background: var(--bg);
+    color:var(--text);
+    -webkit-font-smoothing:antialiased;
+  }
 
-  return (
-    <form onSubmit={submit} className="mt-6 grid gap-3">
-      <input className="rounded-2xl bg-white/5 p-3" placeholder="Name" onChange={e => setForm(f => ({ ...f, name: e.target.value }))} />
-      <input className="rounded-2xl bg-white/5 p-3" placeholder="Phone" onChange={e => setForm(f => ({ ...f, phone: e.target.value }))} />
-      <input className="rounded-2xl bg-white/5 p-3" placeholder="Address" onChange={e => setForm(f => ({ ...f, address: e.target.value }))} />
-      <input className="rounded-2xl bg-white/5 p-3" placeholder="Preferred date/time" onChange={e => setForm(f => ({ ...f, date: e.target.value }))} />
-      <button disabled={!canSubmit} className="rounded-2xl bg-white px-4 py-3 text-neutral-950">Send request</button>
-    </form>
-  );
-}
+  h1, h2, h3{ font-family: 'Playfair Display', serif; }
 
-function Toast({ toast, onClose }) {
-  if (!toast) return null;
-  return (
-    <div className="fixed bottom-4 right-4 rounded-2xl bg-neutral-900 p-4 border border-white/10">
-      <div className="font-semibold">{toast.title}</div>
-      <div className="text-sm text-white/70">{toast.message}</div>
-      <button onClick={onClose} className="mt-2 text-xs underline">Close</button>
+  a{color:inherit;text-decoration:none}
+  .container{max-width:1280px;margin:auto;padding:80px 24px}
+  .section-title{font-size:42px;letter-spacing:-.02em;margin:0; color:white;}
+  .section-sub{margin:16px 0 0;color:var(--muted);max-width:600px;line-height:1.6;font-size:18px;}
+  
+  /* Buttons */
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:10px;
+    background:var(--gold);color:#000;
+    padding:14px 24px;border-radius:8px;
+    font-weight:700;font-size:14px;text-transform: uppercase;letter-spacing: 0.05em;
+    border:1px solid var(--gold);
+    transition:all .2s ease;
+    cursor:pointer;
+  }
+  .btn:hover{background:#fff; border-color:#fff; transform:translateY(-2px);}
+  
+  .btn.alt{
+    background:transparent;
+    color:#fff;border:1px solid rgba(255,255,255,.3);
+  }
+  .btn.alt:hover{border-color:#fff;}
+
+  /* Header */
+  header{
+    position:sticky;top:0;z-index:100;
+    background:rgba(5,5,5,.85);
+    backdrop-filter: blur(20px);
+    border-bottom:1px solid rgba(255,255,255,.08);
+  }
+  .nav{
+    max-width:1280px;margin:auto;padding:16px 24px;
+    display:flex;align-items:center;justify-content:space-between;
+  }
+  .brand{font-family:'Playfair Display', serif; font-size:24px; font-weight:700; color:var(--gold); letter-spacing: -0.02em;}
+  .navlinks{display:flex;gap:32px;align-items:center}
+  .navlinks a{font-size:14px;color:rgba(255,255,255,.7);font-weight:500;transition:color .2s}
+  .navlinks a:hover{color:var(--gold)}
+
+  /* Hero */
+  .hero{padding:0; border-bottom:1px solid rgba(255,255,255,.08);}
+  .hero-wrap{
+    min-height:85vh;
+    display:flex;align-items:center;
+    background:
+      linear-gradient(to right, rgba(0,0,0,0.8), rgba(0,0,0,0.4)),
+      url('https://images.unsplash.com/photo-1601362840469-51e4d8d58785?auto=format&fit=crop&w=1800&q=80') center/cover;
+  }
+  .hero-inner{max-width:1280px;margin:auto;padding:0 24px;}
+  h1{
+    margin:0; font-size: clamp(48px, 6vw, 82px);
+    line-height:1.1; max-width:900px;
+  }
+  .hero-inner p{
+    margin:24px 0 32px; max-width:600px;
+    color:rgba(255,255,255,.8); font-size:18px; line-height:1.6;
+  }
+
+  /* Pricing Grid */
+  .grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px;margin-top:40px}
+  
+  .card{
+    background:var(--card);
+    border:1px solid rgba(255,255,255,.1);
+    border-radius:var(--radius);
+    padding:32px 24px;
+    display:flex;flex-direction:column;
+    transition:transform .3s ease, border .3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .card:hover{transform:translateY(-5px); border-color:rgba(255,255,255,.3);}
+
+  /* The Logo inside the card */
+  .pkg-logo {
+    width: 80px; height: 80px; margin-bottom: 20px;
+    border-radius: 50%;
+    border: 2px solid rgba(255,255,255,0.1);
+    object-fit: cover;
+  }
+
+  .card h3{margin:0;font-size:24px;color:#fff;}
+  .card .desc{font-size:13px; color:var(--muted); margin-top:8px; min-height:40px;}
+  
+  .price-row{margin:24px 0; border-bottom:1px solid rgba(255,255,255,.1); padding-bottom:20px;}
+  .price{font-size:32px;font-weight:700;color:#fff; font-family:'Inter', sans-serif;}
+  .price span{font-size:14px; color:var(--muted); font-weight:400;}
+
+  /* List Items */
+  ul{margin:0;padding:0;list-style:none;}
+  li{
+    margin-bottom:12px; font-size:13px; color:rgba(255,255,255,.8);
+    display:flex; gap:10px; line-height:1.5;
+  }
+  li::before{content:"✓"; color:var(--gold); font-weight:bold;}
+
+  /* Special Card Styling */
+  .card.featured{
+    border:1px solid var(--gold);
+    background: linear-gradient(180deg, rgba(212,175,55,0.05), rgba(0,0,0,0));
+    box-shadow: 0 0 30px rgba(212,175,55,0.1);
+  }
+  .card.featured::before{
+    content:"MOST POPULAR"; position:absolute; top:0; left:0; right:0;
+    background:var(--gold); color:#000; text-align:center;
+    font-size:11px; font-weight:800; padding:6px; letter-spacing:1px;
+  }
+  .card.ultimate{
+    border:1px solid #fff;
+    box-shadow: 0 0 30px rgba(255,255,255,0.1);
+  }
+
+  /* Add Ons Table */
+  .addons-wrap{
+    margin-top:60px;
+    background:var(--card);
+    border-radius:var(--radius);
+    border:1px solid rgba(255,255,255,.1);
+    padding:30px;
+  }
+  .addons-grid{
+    display:grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap:20px; margin-top:20px;
+  }
+  .addon-item{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:16px; background:rgba(255,255,255,.03); border-radius:8px;
+    border:1px solid rgba(255,255,255,.05);
+  }
+  .addon-item .name{font-weight:600; font-size:14px;}
+  .addon-item .cost{color:var(--gold); font-weight:700; font-size:14px;}
+
+  /* Gallery */
+  .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:40px}
+  .g-item{aspect-ratio: 4/3; background:#222; border-radius:12px; overflow:hidden;}
+  .g-item img{width:100%; height:100%; object-fit:cover; transition:transform 0.5s;}
+  .g-item:hover img{transform:scale(1.05);}
+
+  /* Booking Iframe */
+  .booking-frame{
+    width:100%; height:750px; border:none; 
+    border-radius:var(--radius); background:#fff;
+    margin-top:40px;
+  }
+
+  /* Footer */
+  footer{border-top:1px solid rgba(255,255,255,.1);background:#020202; margin-top:80px;}
+  .foot{
+    max-width:1280px;margin:auto;
+    padding:60px 24px;
+    display:flex;justify-content:space-between; flex-wrap:wrap; gap:40px;
+  }
+  .contact-info div{margin-bottom:10px; color:var(--muted);}
+
+  @media (max-width: 1024px){
+    .grid4{grid-template-columns: 1fr 1fr;}
+  }
+  @media (max-width: 700px){
+    .grid4{grid-template-columns: 1fr;}
+    .navlinks{display:none}
+    .gallery{grid-template-columns: 1fr;}
+    h1{font-size:42px;}
+    .hero-wrap{min-height:600px;}
+  }
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="nav">
+    <div class="brand">
+      PARAMOUNT
     </div>
-  );
-}
-
-function Glow() {
-  return (
-    <div className="pointer-events-none absolute inset-0">
-      <div className="absolute -left-40 -top-40 h-[520px] w-[520px] rounded-full bg-white/10 blur-3xl" />
-      <div className="absolute -right-40 -top-40 h-[520px] w-[520px] rounded-full bg-white/10 blur-3xl" />
+    <div class="navlinks">
+      <a href="#pricing">Services</a>
+      <a href="#addons">Add-Ons</a>
+      <a href="#results">Gallery</a>
+      <a href="#faq">FAQ</a>
     </div>
-  );
-}
+    <a class="btn" href="#book">Book Now</a>
+  </div>
+</header>
 
-function Noise() {
-  return (
-    <div
-      className="pointer-events-none fixed inset-0 opacity-[0.05]"
-      style={{ backgroundImage: "url(data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E)" }}
-    />
-  );
-}
+<section class="hero">
+  <div class="hero-wrap">
+    <div class="hero-inner">
+      <div style="color:var(--gold); font-weight:700; letter-spacing:0.1em; font-size:12px; margin-bottom:16px;">SCOTTSDALE • TEMPE • PHOENIX</div>
+      <h1>Preserving Your <br><span style="color:var(--gold)">Investment.</span></h1>
+      <p>Mobile detailing engineered for luxury vehicles. We use Koch Chemie German chemistry and touchless drying to protect your asset from the Arizona elements.</p>
+      <div style="display:flex; gap:16px;">
+        <a class="btn" href="#book">Book Appointment</a>
+        <a class="btn alt" href="#pricing">View Menu</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="pricing" class="container">
+  <h2 class="section-title">The Service Menu</h2>
+  <p class="section-sub">Select your level of protection. All services are performed at your home or office.</p>
+
+  <div class="grid4">
+    
+    <div class="card">
+      <img src="horizon.png" alt="Horizon Logo" class="pkg-logo">
+      <h3>The Horizon</h3>
+      <div class="desc">Exterior Protection & Gloss</div>
+      <div class="price-row">
+        <div class="price">$80+ <span>/ Coupe</span></div>
+        <div style="font-size:12px; color:var(--muted); margin-top:5px;">$100 Mid | $120 XL</div>
+      </div>
+      <ul>
+        <li>Koch Chemie Foam Pre-Soak</li>
+        <li>Scratch-Free Contact Wash</li>
+        <li>Wheel Faces & Barrels Cleaned</li>
+        <li>Hydro Foam Sealant (3-Month)</li>
+        <li>Filtered Air Dry (No Drips)</li>
+        <li>Non-Sling Satin Tire Dressing</li>
+      </ul>
+      <a class="btn alt" style="margin-top:auto" href="#book">Book Horizon</a>
+    </div>
+
+    <div class="card">
+      <img src="executive.png" alt="Executive Logo" class="pkg-logo">
+      <h3>The Executive</h3>
+      <div class="desc">Full Maintenance (Int + Ext)</div>
+      <div class="price-row">
+        <div class="price">$140+ <span>/ Coupe</span></div>
+        <div style="font-size:12px; color:var(--muted); margin-top:5px;">$160 Mid | $190 XL</div>
+      </div>
+      <ul>
+        <li><strong>Everything in Horizon +</strong></li>
+        <li>Compressed Air Crevice Purge</li>
+        <li>Full Vacuum (Cabin & Trunk)</li>
+        <li>Pol Star Brush Agitation</li>
+        <li>Matte-Finish UV Dash Protection</li>
+        <li>Streak-Free Glass & Screens</li>
+        <li>Door Jambs Wiped</li>
+      </ul>
+      <a class="btn alt" style="margin-top:auto" href="#book">Book Executive</a>
+    </div>
+
+    <div class="card featured">
+      <img src="shield.png" alt="Desert Shield Logo" class="pkg-logo">
+      <h3>Desert Shield</h3>
+      <div class="desc">Restoration & Deep Clean</div>
+      <div class="price-row">
+        <div class="price" style="color:var(--gold)">$275+ <span>/ Coupe</span></div>
+        <div style="font-size:12px; color:var(--muted); margin-top:5px;">$325 Mid | $375 XL</div>
+      </div>
+      <ul>
+        <li><strong>Everything in Executive +</strong></li>
+        <li>Iron Decon (Brake Dust Removal)</li>
+        <li>Clay Bar Paint Treatment</li>
+        <li>Full Interior Steam Clean</li>
+        <li>Carpet & Mat Extraction</li>
+        <li>Leather Conditioning</li>
+        <li>6-Month Paint Sealant</li>
+      </ul>
+      <a class="btn" style="margin-top:auto" href="#book">Book Restoration</a>
+    </div>
+
+    <div class="card ultimate">
+      <img src="paramount.png" alt="Paramount Logo" class="pkg-logo">
+      <h3>The Paramount</h3>
+      <div class="desc">Correction & Ceramic</div>
+      <div class="price-row">
+        <div class="price">$700+ <span>/ Coupe</span></div>
+        <div style="font-size:12px; color:var(--muted); margin-top:5px;">$850 Mid | $1000 XL</div>
+      </div>
+      <ul>
+        <li><strong>Everything in Desert Shield +</strong></li>
+        <li>Engine Bay Detail</li>
+        <li>Machine Polish (Remove Swirls)</li>
+        <li>1-2 Year Ceramic Coating</li>
+        <li>Windshield Coating</li>
+        <li>Showroom Gloss Finish</li>
+      </ul>
+      <a class="btn alt" style="margin-top:auto" href="#book">Book Paramount</a>
+    </div>
+
+  </div>
+</section>
+
+<section id="addons" class="container" style="padding-top:0;">
+  <div class="addons-wrap">
+    <h3 style="font-size:24px; color:white; margin:0;">Specialized Add-Ons</h3>
+    <p style="color:var(--muted); font-size:14px; margin-top:5px;">Add these to any service during booking.</p>
+    
+    <div class="addons-grid">
+      <div class="addon-item">
+        <span class="name">Engine Bay Detail</span>
+        <span class="cost">$60</span>
+      </div>
+      <div class="addon-item">
+        <span class="name">Headlight Restoration</span>
+        <span class="cost">$80</span>
+      </div>
+      <div class="addon-item">
+        <span class="name">Ozone Odor Removal</span>
+        <span class="cost">$75</span>
+      </div>
+      <div class="addon-item">
+        <span class="name">Pet Hair Removal</span>
+        <span class="cost">$50+</span>
+      </div>
+      <div class="addon-item">
+        <span class="name">Glass Water Spots</span>
+        <span class="cost">$40</span>
+      </div>
+      <div class="addon-item">
+        <span class="name">Leather Shield</span>
+        <span class="cost">$150</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="results" class="container">
+  <h2 class="section-title">The Portfolio</h2>
+  <div class="gallery">
+    <div class="g-item"><img src="https://images.unsplash.com/photo-1601362840469-51e4d8d58785?auto=format&fit=crop&w=800&q=80" alt="Detail 1"></div>
+    <div class="g-item"><img src="https://images.unsplash.com/photo-1507136566006-cfc505b114fc?auto=format&fit=crop&w=800&q=80" alt="Detail 2"></div>
+    <div class="g-item"><img src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=800&q=80" alt="Detail 3"></div>
+  </div>
+</section>
+
+<section id="book" class="container">
+  <h2 class="section-title">Secure Your Appointment</h2>
+  <p class="section-sub">Real-time availability. Instant confirmation.</p>
+  
+  <iframe
+    src="https://app.squareup.com/appointments/book/z1rze96wmy59im/LVT8TNNR0K1HC/start"
+    class="booking-frame"
+    loading="lazy">
+  </iframe>
+</section>
+
+<footer>
+  <div class="foot">
+    <div style="max-width:300px;">
+      <div class="brand" style="margin-bottom:16px;">PARAMOUNT</div>
+      <p style="color:var(--muted); font-size:13px; line-height:1.6;">
+        Scottsdale's premier mobile detailing service. We bring water, power, and professional German chemistry to your doorstep.
+      </p>
+    </div>
+
+    <div class="contact-info">
+      <h4 style="color:white; margin:0 0 16px 0;">Contact</h4>
+      <div>480-479-6100</div>
+      <div>paramountmobiledetail@gmail.com</div>
+      <div>Serving Scottsdale & Tempe</div>
+    </div>
+
+    <div class="contact-info">
+      <h4 style="color:white; margin:0 0 16px 0;">Links</h4>
+      <div><a href="#pricing">Services</a></div>
+      <div><a href="#book">Book Now</a></div>
+      <div><a href="#faq">FAQ</a></div>
+    </div>
+  </div>
+  <div style="text-align:center; padding:20px; border-top:1px solid #111; color:#444; font-size:12px;">
+    &copy; 2026 Paramount Mobile Detail. All rights reserved.
+  </div>
+</footer>
+
+</body>
+</html>
